@@ -6,18 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+
+/**
+ * @Route("/blog", name="blog")
+ */
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/blog", name="blog_index")
+     * @Route("", name="_index")
      */
     public function index()
     {
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
         ]);
-        // return new Response(
-        //     '<html><body>Blog Index</body></html>'
-        // );
+    }
+
+    /**
+     * @Route("/show/{slug<([a-z0-9]-?)+>?Article non défini}", name="_showArticle")
+     */
+    public function show($slug)
+    {   
+        $readable=ucwords(implode(' ',(explode('-',$slug))));
+        return $this->render('blog/show.html.twig', ['readable' => $readable]);
     }
 }
