@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Article;
 use App\Entity\Category;
 
-
 /**
  * @Route("/blog", name="blog_")
  */
@@ -92,16 +91,16 @@ class BlogController extends AbstractController
     {   
         if (!$categoryName) {
                 throw $this
-                ->createNotFoundException('No categoryName has been sent to find an article in article\'s table.');
+                ->createNotFoundException('No category with that name.');
             }
         $categoryName = preg_replace('/-/',' ', ucwords(trim(strip_tags($categoryName)), "-"));
         $category = $this->getDoctrine()
                 ->getRepository(Category::class)
                 ->findOneByName($categoryName);
-        $articles = $this->getDoctrine()
-                ->getRepository(Article::class)
-                ->findBy(['category' => $category],['id'=>'DESC'],3);
+        // $articles = $this->getDoctrine()
+        //         ->getRepository(Article::class)
+        //         ->findBy(['category' => $category],['id'=>'DESC'],3);
 
-        return $this->render('blog/category.html.twig',['category' => $category->getName(),'articles' => $articles]);
+        return $this->render('blog/category.html.twig',['category' => $category->getName(),'articles' => $category->getArticles()]);
     }
 }

@@ -3,6 +3,10 @@
 {% block title %}All articles{% endblock %}
 
 {% block body %}
+    <button><a href="{{ path('blog_show_category', { 'categoryName': 'javascript'}) }} ">JavaScript</a></button>
+    <button><a href="{{ path('blog_show_category', { 'categoryName': 'java'}) }} ">Java</a></button>
+    <button><a href="{{ path('blog_show_category', { 'categoryName': 'c'}) }} ">C</a></button>
+    </br>
     <h1>All articles from article s table : </h1>
     {% for article in articles %}
         <div>
