@@ -10,6 +10,9 @@ use App\Entity\Article;
 use App\Entity\Category;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\ArticleSearchType;
+use App\Form\CategoryType;
 
 /**
  * @Route("/blog", name="blog_")
@@ -33,10 +36,13 @@ class BlogController extends AbstractController
             'No article found in article\'s table.'
             );
         }
-
+        $category = $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->findAll();
+        
         return $this->render(
                 'blog/index.html.twig',
-                ['articles' => $articles]
+                ['articles' => $articles,'categories'=>$category]
         );
     }
 
@@ -82,7 +88,7 @@ class BlogController extends AbstractController
         );
     }
 
-    /** Getting a article with a formatted slug for title
+    /** Getting articles from a defined category
      *
      * @param string $categoryName
      *
@@ -107,4 +113,6 @@ class BlogController extends AbstractController
 
         return $this->render('blog/category.html.twig',['category' => $category->getName(),'articles' => $category->getArticles()]);
     }
+
+    
 }
