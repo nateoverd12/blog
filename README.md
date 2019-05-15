@@ -1,3 +1,4 @@
+Obviously, .env.local is ignored by git (cf. gitignore), so don't forget to fill your mysql informations in the .env or add your .env.local file .
 Please run the following commands to import datas needed for quest 08:
 
 php bin/console doctrine:query:sql 'INSERT INTO category VALUES (2, "Java");'

@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Article;
 use App\Entity\Category;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 /**
  * @Route("/blog", name="blog_")
  */
@@ -85,18 +87,20 @@ class BlogController extends AbstractController
      * @param string $categoryName
      *
      * @Route("/category/{categoryName}", name="show_category")
+     * @ParamConverter("category", class="App\Entity\Category", options={"mapping":{"categoryName":"name"}} )
      *  @return Response A response instance
      */
-    public function showByCategory(string $categoryName): Response
+    public function showByCategory(Category $category): Response
     {   
-        if (!$categoryName) {
-                throw $this
-                ->createNotFoundException('No category with that name.');
-            }
-        $categoryName = preg_replace('/-/',' ', ucwords(trim(strip_tags($categoryName)), "-"));
-        $category = $this->getDoctrine()
-                ->getRepository(Category::class)
-                ->findOneByName($categoryName);
+        // if (!$categoryName) {
+        //         throw $this
+        //         ->createNotFoundException('No category with that name.');
+        //     }
+        // $categoryName = preg_replace('/-/',' ', ucwords(trim(strip_tags($categoryName)), "-"));
+        // $category = $this->getDoctrine()
+        //         ->getRepository(Category::class)
+        //         ->findOneByName($categoryName);
+
         // $articles = $this->getDoctrine()
         //         ->getRepository(Article::class)
         //         ->findBy(['category' => $category],['id'=>'DESC'],3);
