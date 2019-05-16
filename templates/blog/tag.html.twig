@@ -3,7 +3,7 @@
 {% block title %}All articles from tag{% endblock %}
 
 {% block body %}
-    <h1>All articles from the {{ tagName }} tag: </h1>
+    <h1>All articles from the {{ tagName }} tag: </h1>
     {% for article in articles %}
         <div>
             <h2>{{ article.id }} / {{ article.title }} - Tag : {{ tagName }}</h2>
