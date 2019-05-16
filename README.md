@@ -12,6 +12,6 @@ php bin/console doctrine:query:sql 'INSERT INTO article (id, title, content, cat
 
 php bin/console doctrine:query:sql 'INSERT INTO article (id, title, content, category_id) VALUES (NULL, "java needs coffee", "lavazza for instance", 2);'
 
-php bin/console doctrine:query:sql 'INSERT INTO article (id, title, content, category_id) VALUES (NULL, "java and javascript together?", "WHY?????", 2);'
+php bin/console doctrine:query:sql 'INSERT INTO article (id, title, content, category_id) VALUES (NULL, "java and javascript together", "WHY?????", 2);'
 
 php bin/console doctrine:query:sql 'INSERT INTO article (id, title, content, category_id) VALUES (NULL, "C vs anyone", "C simple?", 3);'

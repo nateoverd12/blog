@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\ArticleSearchType;
 use App\Form\CategoryType;
 
+use App\Entity\Tag;
+
 /**
  * @Route("/blog", name="blog_")
  */
@@ -36,13 +38,13 @@ class BlogController extends AbstractController
             'No article found in article\'s table.'
             );
         }
-        $category = $this->getDoctrine()
+        $categories = $this->getDoctrine()
                 ->getRepository(Category::class)
                 ->findAll();
         
         return $this->render(
                 'blog/index.html.twig',
-                ['articles' => $articles,'categories'=>$category]
+                ['articles' => $articles,'categories'=>$categories]
         );
     }
 
@@ -90,8 +92,6 @@ class BlogController extends AbstractController
 
     /** Getting articles from a defined category
      *
-     * @param string $categoryName
-     *
      * @Route("/category/{categoryName}", name="show_category")
      * @ParamConverter("category", class="App\Entity\Category", options={"mapping":{"categoryName":"name"}} )
      *  @return Response A response instance
@@ -115,4 +115,14 @@ class BlogController extends AbstractController
     }
 
     
+    /** Getting articles from a defined tag
+     *
+     * @Route("/tag/{name}", name="show_tag")
+     *  @return Response A response instance
+     */
+    public function showByTag(Tag $tag): Response
+    {   
+        dump($tag->getName());
+        return $this->render('blog/tag.html.twig',['articles' => $tag->getArticles(),'tagName' => $tag->getName()]);
+    }
 }

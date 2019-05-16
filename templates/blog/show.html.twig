@@ -15,5 +15,14 @@
 <a href="{{ path('app_index') }}">
     Back to homepage.
 </a>
+</br>
+<strong>Tags :</strong>
+<ul>
+    {% for tag in article.tags %}
+        <li><a href="{{ path('blog_show_tag', {'name': tag.name }) }}">{{ tag.name }}</a></li>
+    {% else %}
+        <li>No tags for this article</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
