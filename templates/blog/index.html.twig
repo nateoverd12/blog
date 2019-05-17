@@ -6,13 +6,6 @@
     {% for category in categories %}
         <button><a href="{{ path('blog_show_category', { 'categoryName': category.name }) }} ">{{ category.name }}</a></button>
     {% endfor %}
-    {# </br>
-    </br>
-    {{ form_start(form) }}
-        {{ form_row(form.searchField) }}
-        <button type="submit" name="btnSearch">Rechercher</button>
-    {{ form_end(form) }}
-    </br> #}
     </br>
     <button><a href="{{ path('category_create') }}">Create a category</a></button>
     <h1>All articles from article s table : </h1>
