@@ -2,27 +2,29 @@
 
 {% block title %}{{ slug }}{% endblock %}
 
-{% block stylesheets %}{% endblock %}
 
 {% block body %}
+<div class="row">
+    <div class="col-sm-7 col-10 offset-1">
 
-<div>
-    <h1>Real article s title : {{ article.title }}</h1>
-    <h2>Category : {{ article.category.name }}</h2>
-    <p>{{ article.content }}</p>
-</div>
-
-<a href="{{ path('app_index') }}">
-    Back to homepage.
-</a>
-</br>
-<strong>Tags :</strong>
-<ul>
-    {% for tag in article.tags %}
-        <li><a href="{{ path('blog_show_tag', {'name': tag.name }) }}">{{ tag.name }}</a></li>
-    {% else %}
-        <li>No tags for this article</li>
-    {% endfor %}
-</ul>
+        <div>
+            <h1>Real article s title : {{ article.title }}</h1>
+            <h2>Category : {{ article.category.name }}</h2>
+            <p>{{ article.content }}</p>
+        </div>
+        </br>
+        <strong>Tags :</strong>
+        <ul>
+            {% for tag in article.tags %}
+                <li><a href="{{ path('blog_show_tag', {'name': tag.name }) }}">{{ tag.name }}</a></li>
+            {% else %}
+                <li>No tags for this article</li>
+            {% endfor %}
+        </ul>
+        <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('app_index') }}">
+            Back to homepage.
+        </a></button>
+    </div>
+</div>  
 
 {% endblock %}

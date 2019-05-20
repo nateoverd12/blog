@@ -12,3 +12,7 @@ require('../css/app.scss');
 // const $ = require('jquery');
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+// the ~ allows you to reference things in node_modules
+const $ = require('jquery');
+require('bootstrap')

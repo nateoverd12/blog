@@ -4,10 +4,10 @@
 
 {% block body %}
     {% for category in categories %}
-        <button><a href="{{ path('blog_show_category', { 'categoryName': category.name }) }} ">{{ category.name }}</a></button>
+        <button class="btn btn-info mt-2 mb-2"><a href="{{ path('blog_show_category', { 'categoryName': category.name }) }} " class=".text-white">{{ category.name }}</a></button>
     {% endfor %}
     </br>
-    <button><a href="{{ path('category_create') }}">Create a category</a></button>
+    <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('category_create') }}">Create a category</a></button>
     <h1>All articles from article s table : </h1>
     {% for article in articles %}
         <div>
@@ -18,7 +18,7 @@
     {% else %}
         Aucun article trouvé.
     {% endfor %}
-    <a href="{{ path('app_index') }}">
+    <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('app_index') }}">
       Back to homepage.
-    </a>
+    </a></button>
 {% endblock %}

@@ -4,3 +4,10 @@
 body {
     background-color: #98e698;
 }
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+.btn a {
+    color: white;
+}
