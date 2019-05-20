@@ -20,7 +20,7 @@ class CategoryController extends AbstractController
     /** Creating a category
      *
      *
-     * @Route("/", name="create")
+     * @Route("/add", name="create")
      *  @return Response A response instance
      */
     public function add(Request $request,ObjectManager $manager): Response
@@ -41,5 +41,23 @@ class CategoryController extends AbstractController
                 'blog/create.html.twig',
                 ['form' => $form->createView()]
         );
+    }
+
+    /** Removing an empty category
+     *
+     *
+     * @Route("/remove/{id}", name="delete", methods={"DELETE"})
+     *  @return Response A response instance
+     */
+    // what-s methods DELETE is for ?
+    public function remove(Category $category, Request $request): Response
+    {   
+        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($category);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('blog_index');
     }
 }
