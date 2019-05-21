@@ -16,6 +16,8 @@ use App\Form\CategoryType;
 
 use App\Entity\Tag;
 
+use App\Repository\ArticleRepository;
+
 /**
  * @Route("/blog", name="blog_")
  */
@@ -24,27 +26,28 @@ class BlogController extends AbstractController
     /**
     * Show all row from article's entity
     *
-    * @Route("/", name="index")
+    * @Route("/list", name="index")
     * @return Response A response instance
     */
-    public function index(): Response
-    {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy([], ['title' => 'ASC']);
+    public function index(Request $request, ArticleRepository $ArticleRepo): Response
+    {   
+        $page= $request->query->get('page')??1;
+        $articles=$ArticleRepo->findBy([],[],8,($page-1)*8);
+        $pages=['actual' => $page,'last'=> ceil($ArticleRepo->count([])/8)];
 
         if (!$articles) {
             throw $this->createNotFoundException(
             'No article found in article\'s table.'
             );
         }
+        
         $categories = $this->getDoctrine()
                 ->getRepository(Category::class)
                 ->findAll();
-        
+
         return $this->render(
                 'blog/index.html.twig',
-                ['articles' => $articles,'categories'=>$categories]
+                ['articles' => $articles,'categories'=>$categories,'pages'=> $pages]
         );
     }
 
