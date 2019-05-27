@@ -8,7 +8,7 @@
     {% endfor %}
     </br>
     <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('category_create') }}">Create a category</a></button>
-    <h1>All articles from article table : </h1>
+    <h1>All articles from <i>article</i> table : </h1>
     Page :
     {% if pages.actual >1 %}<button><a href="{{ path('blog_index', {'page': pages.actual-1 }) }}"> < </a></button>{% endif %}
     {{ pages.actual }}
@@ -17,7 +17,8 @@
         <div>
             <h2><small>({{ loop.index }})</small> [id: {{ article.id }}] / {{ article.title }} - Category : {{ article.category.name }}</h2>
             <p>{{ article.content }}</p>
-            <a href="{{ path('blog_show', { 'slug': article.title|replace({" ":"-"})|lower  }) }}">En savoir plus</a>
+            {# <a href="{{ path('blog_show', { 'slug': article.title|replace({" ":"-"})|lower  }) }}">En savoir plus</a> #}
+            <a href="{{ path('blog_show', { 'slug': article.slug  }) }}">En savoir plus</a>
         </div>
     {% else %}
         Aucun article trouvé.

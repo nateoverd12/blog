@@ -31,6 +31,7 @@ class BlogController extends AbstractController
     */
     public function index(Request $request, ArticleRepository $ArticleRepo): Response
     {   
+        // on next page, twig will allow a parameter but and it'll automatically add as query (not subdomain paramater) because there is no subdomain/parameter waited
         $page= $request->query->get('page')??1;
         $articles=$ArticleRepo->findBy([],[],8,($page-1)*8);
         $pages=['actual' => $page,'last'=> ceil($ArticleRepo->count([])/8)];
@@ -40,7 +41,7 @@ class BlogController extends AbstractController
             'No article found in article\'s table.'
             );
         }
-        
+
         $categories = $this->getDoctrine()
                 ->getRepository(Category::class)
                 ->findAll();
@@ -62,26 +63,29 @@ class BlogController extends AbstractController
      *  @return Response A response instance
      */
     public function show(?string $slug) : Response
-    {
+    {   
         if (!$slug) {
                 throw $this
                 ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
             }
 
-        $slug = preg_replace(
-        '/-/',
-        ' ', ucwords(trim(strip_tags($slug)), "-")
-            );
+        /* from now on, useless because slug to slug comparison */
+        // $slug = preg_replace(
+        // '/-/',
+        // ' ', ucwords(trim(strip_tags($slug)), "-")
+        //     );
 
         $article = $this->getDoctrine()
                 ->getRepository(Article::class)
-                ->findOneBy(['title' => mb_strtolower($slug)]);
+                /* from now on, useless because slug to slug comparison */
+                // ->findOneBy(['title' => mb_strtolower($slug)]);
+                ->findOneBy(['slug' => $slug]);
                 //La méthode findOneBy() peut être utilisée de différentes manières. Tu peux sélectionner directement la propriété sur laquelle rechercher l’information, notamment grâce à la méthode magique __call() émulant un appel de méthode, on a pour exemples : findOneByNomDuChamp(), findOneById(), findOneByName()). Par conséquent, findOneByTitle(mb_strtolower($slug)) aurait très bien pu fonctionner à la place de findOneBy(['title' => mb_strtolower($slug)])
 
         if (!$article) {
             throw $this->createNotFoundException(
             'No article with '.$slug.' title, found in article\'s table.'
-        );
+            );
         }
 
         return $this->render(
