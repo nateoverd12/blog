@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Slugify;
+use App\Service\Mailer;
+
 
 /**
  * @Route("/article")
@@ -29,7 +31,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      */
-    public function new(Request $request,Slugify $slugify, \Swift_Mailer $mailer): Response
+    public function new(Request $request,Slugify $slugify, Mailer $mailer): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -42,19 +44,8 @@ class ArticleController extends AbstractController
 
             $entityManager->persist($article);
             $entityManager->flush();
-       
-            $message = (new \Swift_Message('Un nouvel article vient d\'être publié !'))
-                ->setFrom($_ENV['MAILER_FROM_ADDRESS'])
-                ->setTo($_ENV['MAILER_FROM_ADDRESS'])
-               ->setBody(
-                   $this->renderView('email/articleAdded.html.twig',
-                                    ['title' => $article->getTitle(),
-                                    'slug' => $article->getSlug()
-                                ]),
-                                    'text/html'
-               )
-            ;
-            $mailer->send($message);
+
+            $mailer->sendArticle('Un nouvel article vient d\'être publié !', $article->getTitle(), $article->getSlug());
 
             return $this->redirectToRoute('article_index');
         }
