@@ -1,0 +1,8 @@
+<div style="height: 50px; width:100%; background-color: #007bff;  font-size: 20px; font-family: Arial; padding-left: 8px;padding-top: 12px; color: white;">My1stSf project</div>
+<h3>Nouvel article publié sur le <a style="text-decoration: none;" href="{{ url('blog_index') }}">blog !</a></h3>
+
+Titre de l'article : <i>{{ title }}</i>
+</br>
+<a href="{{ url('blog_show', {'slug': slug }) }}">cliquez ici pour accéder à l'article</a>
+</br>
+Merci !
