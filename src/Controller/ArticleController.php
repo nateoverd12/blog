@@ -45,8 +45,7 @@ class ArticleController extends AbstractController
        
             $message = (new \Swift_Message('Un nouvel article vient d\'être publié !'))
                 ->setFrom($_ENV['MAILER_FROM_ADDRESS'])
-                // ->setTo('francois.doussin@wildcodeschool.fr')
-                ->setTo('nathan.dev.abroad@gmail.com')
+                ->setTo($_ENV['MAILER_FROM_ADDRESS'])
                ->setBody(
                    $this->renderView('email/articleAdded.html.twig',
                                     ['title' => $article->getTitle(),
