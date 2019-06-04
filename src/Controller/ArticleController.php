@@ -41,13 +41,13 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $article->setSlug($slugify->generate($article->getTitle()));
-            
+
             $article->setAuthor($this->getUser());
 
             $entityManager->persist($article);
             $entityManager->flush();
 
-            $mailer->sendArticle('Un nouvel article vient d\'être publié !', $article->getTitle(), $article->getSlug());
+            // $mailer->sendArticle('Un nouvel article vient d\'être publié !', $article->getTitle(), $article->getSlug());
 
             return $this->redirectToRoute('article_index');
         }
