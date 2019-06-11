@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-
-use Symfony\Component\HttpFoundation\Response;
-
 use App\Entity\Category;
-use Symfony\Component\HttpFoundation\Request;
 use App\Form\CategoryType;
+
+use Symfony\Component\HttpFoundation\Request;
+
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/category", name="category_")
@@ -18,10 +19,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 class CategoryController extends AbstractController
 {
     /** Creating a category
-     *
-     *
+     * 
      * @Route("/add", name="create")
-     *  @return Response A response instance
+     * @IsGranted("ROLE_ADMIN")
+     * @return Response A response instance
      */
     public function add(Request $request,ObjectManager $manager): Response
     {   
