@@ -74,7 +74,7 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article,Slugify $slugify): Response
     {   
-        if ($this->getUser()->getEmail()!=$article->getAuthor()->getEmail() && $this->getUser()->getRoles()=='ROLE_AUTHOR'){
+        if ($this->getUser()->getEmail()!=$article->getAuthor()->getEmail() && in_array('ROLE_AUTHOR', $this->getUser()->getRoles())){
             throw $this->createAccessDeniedException();
         } else {
             $form = $this->createForm(ArticleType::class, $article);

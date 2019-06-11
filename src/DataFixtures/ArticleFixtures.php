@@ -27,7 +27,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $faker  =  Faker\Factory::create('fr_FR');
             $article->setTitle(rtrim(mb_strtolower($faker->sentence()),"."));
             $article->setContent($faker->sentence(10));
-            $article->setAuthor($this->getReference('only_author'));
+            $i>30?$article->setAuthor($this->getReference('for_test')):$article->setAuthor($this->getReference('only_author'));
             $article->setSlug($slugify->generate($article->getTitle()));
 
             $manager->persist($article);

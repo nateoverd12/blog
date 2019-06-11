@@ -87,7 +87,7 @@ class BlogController extends AbstractController
             'No article with '.$slug.' title, found in article\'s table.'
             );
         }
-
+        
         return $this->render(
         'blog/show.html.twig',
         [

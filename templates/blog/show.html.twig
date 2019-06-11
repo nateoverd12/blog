@@ -21,7 +21,7 @@
                 <li>No tags for this article</li>
             {% endfor %}
         </ul>
-        {% if is_granted('ROLE_AUTHOR') %}
+        {% if is_granted('ROLE_AUTHOR') and app.user.email==article.Author.Email %}
         <button class="btn btn-primary mt-2 mb-2">
             <a href="{{ path('article_edit', { 'id': article.id} ) }}">Éditer</a>
         </button>
