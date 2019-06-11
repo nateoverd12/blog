@@ -3,11 +3,16 @@
 {% block title %}All articles{% endblock %}
 
 {% block body %}
-    {% for category in categories %}
-        <button class="btn btn-info mt-2 mb-2"><a href="{{ path('blog_show_category', { 'categoryName': category.name }) }} " class=".text-white">{{ category.name }}</a></button>
-    {% endfor %}
-    </br>
-    <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('category_create') }}">Create a category</a></button>
+    <form class="select-category mt-2 ml-3" id='myForm'>
+        <label for="category-select">Select by category:</label>
+        <select id="category-select">
+        {% for category in categories %}
+            <option value="{{ category.name }}">{{ category.name }}</option>
+        {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-info">Search</button>
+        <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('category_create') }}">Create a category</a></button>
+    </form>
     <h1>All articles from <i>article</i> table : </h1>
     Page :
     {% if pages.actual >1 %}<button><a href="{{ path('blog_index', {'page': pages.actual-1 }) }}"> < </a></button>{% endif %}
@@ -26,4 +31,16 @@
     <button class="btn btn-secondary mt-2 mb-2"><a href="{{ path('app_index') }}">
       Back to homepage.
     </a></button>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.getElementById('myForm').addEventListener("submit", (e) => {
+    /* console.log(e.target); */
+    e.preventDefault();
+    route = "{{ path('blog_show_category', { 'categoryName': "PLACEHOLDER" }) }}";
+    route = route.replace("PLACEHOLDER", document.getElementById('category-select').value);
+    window.location = route;
+})
+</script>
 {% endblock %}
