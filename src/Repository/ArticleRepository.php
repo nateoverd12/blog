@@ -20,13 +20,20 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     public function findAllWithCategories()
-    {
-    $qb = $this->createQueryBuilder('a')
-        ->innerJoin('a.category', 'c' )
-        ->addSelect('c')
-        ->getQuery();
-
-    return $qb->execute();
+    {   
+        // QueryBuilder version :
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('a.category', 'c' )
+            ->leftJoin('a.tags','t')
+            ->addSelect('c')
+            ->addSelect('t')
+            ->getQuery();
+        // or with dql version
+        // $em = $this->getEntityManager();
+        // $query = $em->createQuery('SELECT a, c, t FROM App\Entity\Article a INNER JOIN a.category c INNER JOIN a.tags t');
+        
+        // return $query->execute();
+        return $qb->execute();
     }
     // /**
     //  * @return Article[] Returns an array of Article objects
