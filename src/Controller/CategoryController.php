@@ -33,7 +33,7 @@ class CategoryController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $manager->persist($category);
             $manager->flush();
-
+            $this->addFlash('success', 'The new category has been created');
             return $this->redirectToRoute('blog_index');
 
         }
@@ -57,6 +57,7 @@ class CategoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);
             $entityManager->flush();
+            $this->addFlash('danger', 'The category has been deleted');
         }
 
         return $this->redirectToRoute('blog_index');
